@@ -5,8 +5,8 @@ int main(int argc, char *argv[])
 {
         if (argc <= 1) {
                 printf("You should give me some number\n");
-                exit();
+                exit(0);
         }
         sleep(atoi(argv[1]));
-        exit();
+        exit(0);
 }
