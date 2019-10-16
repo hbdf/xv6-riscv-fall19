@@ -129,26 +129,26 @@ exec(char *path, char **argv)
 // va must be page-aligned
 // and the pages from va to va+sz must already be mapped.
 // Returns 0 on success, -1 on failure.
-static int
+        static int
 loadseg(pagetable_t pagetable, uint64 va, struct inode *ip, uint offset, uint sz)
 {
-  uint i, n;
-  uint64 pa;
+        uint i, n;
+        uint64 pa;
 
-  if((va % PGSIZE) != 0)
-    panic("loadseg: va must be page aligned");
+        if((va % PGSIZE) != 0)
+                panic("loadseg: va must be page aligned");
 
-  for(i = 0; i < sz; i += PGSIZE){
-    pa = walkaddr(pagetable, va + i);
-    if(pa == 0)
-      panic("loadseg: address should exist");
-    if(sz - i < PGSIZE)
-      n = sz - i;
-    else
-      n = PGSIZE;
-    if(readi(ip, 0, (uint64)pa, offset+i, n) != n)
-      return -1;
-  }
-  
-  return 0;
+        for(i = 0; i < sz; i += PGSIZE){
+                pa = walkaddr(pagetable, va + i);
+                if(pa == 0)
+                        panic("loadseg: address should exist");
+                if(sz - i < PGSIZE)
+                        n = sz - i;
+                else
+                        n = PGSIZE;
+                if(readi(ip, 0, (uint64)pa, offset+i, n) != n)
+                        return -1;
+        }
+
+        return 0;
 }
